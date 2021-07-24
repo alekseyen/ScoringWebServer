@@ -1,0 +1,10 @@
+ipython
+flask
+gunicorn
+numpy
+sklearn
+scipy
+flask_wtf
+pandas
+mlflow
+catboost

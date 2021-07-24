@@ -1,0 +1,7 @@
+/venv
+/.cache
+/.config
+/mlruns
+/uploads
+
+test.py
