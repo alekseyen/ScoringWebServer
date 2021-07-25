@@ -11,5 +11,6 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./:/root
+#      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI:/Users/aleksejpodkidysev/PycharmProjects/ScoringAPI
+      - ./:/Users/aleksejpodkidysev/PycharmProjects/ScoringAPI
 

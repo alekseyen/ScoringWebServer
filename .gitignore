@@ -3,5 +3,5 @@
 /.config
 /mlruns
 /uploads
-
+/catboost_info
 test.py

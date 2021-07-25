@@ -1,6 +1,6 @@
 FROM python:3.8-slim
 
-WORKDIR /root
+WORKDIR /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI
 
 COPY . .
 
