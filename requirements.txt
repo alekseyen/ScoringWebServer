@@ -11,3 +11,4 @@ mlflow
 catboost
 wtforms
 wtforms[email]
+tqdm

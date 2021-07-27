@@ -1,13 +1,11 @@
-import subprocess
 import pandas as pd
-from flask import Flask, abort, redirect, url_for, request, jsonify, render_template, send_file, flash
-from flask_wtf import FlaskForm, RecaptchaField
+from flask import Flask, abort, redirect, url_for, request, render_template, flash
+from flask_wtf import FlaskForm
 from wtforms import SelectField
-from wtforms.validators import DataRequired, InputRequired, Length, URL, Email, EqualTo
+from wtforms.validators import DataRequired
 from werkzeug.utils import secure_filename
 import os
-from run_model import run
-from forms import ExampleSelectField
+from modeling import run
 
 app = Flask(__name__)
 
@@ -30,15 +28,16 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
 
         file = request.files['file']
+
         if file.filename == '':
             flash('No selected file')
             print("didn't sent any files")
@@ -76,6 +75,7 @@ def upload_file():
 
     '''
 
+
 ############ test
 class TEST(FlaskForm):
     """Sign up for a user account."""
@@ -105,7 +105,6 @@ def test():
         "template_test.html",
         form=form
     )
-
 
 ##### TODO:
 ## поправить эндпоинт / на новый формат с темлейтами
