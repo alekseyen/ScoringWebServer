@@ -1,12 +1,10 @@
-.install-deps-template: &install-deps
-  before_script:
-    - pip install flake8 isort
-    - pip install -Iv black==20.8b1
-
 build-job:
   stage: build
+  before_script:
+    - pip install flake8 isort pep8-naming
+    - pip install -Iv black==20.8b1
   script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
+    - echo
 
 test-job1:
   stage: test
