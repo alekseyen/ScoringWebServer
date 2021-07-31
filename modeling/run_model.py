@@ -61,7 +61,9 @@ def run(
 ):
     cat_features = do_actual_cat_features(df)
 
-    train, test, y_train, y_test = train_test_split(df.drop(columns=["target"]), df.target.astype(int), test_size=0.33)
+    train, test, y_train, y_test = train_test_split(
+        df.drop(columns=["target"]), df.target.astype(int), test_size=0.33
+    )
 
     clf = CatBoostClassifier(
         eval_metric="AUC:hints=skip_train~false",
@@ -72,10 +74,14 @@ def run(
     with mlflow.start_run():
 
         if search_type == LearningType.GRID:
-            params = clf.grid_search(DEFAULT_GRID_SEARCH, X=train, y=y_train, plot=True)["params"]
+            params = clf.grid_search(
+                DEFAULT_GRID_SEARCH, X=train, y=y_train, plot=True
+            )["params"]
 
         if search_type == LearningType.RANDOMIZED:
-            params = clf.randomized_search(DEFAULT_GRID_SEARCH, X=train, y=y_test, plot=True)["params"]
+            params = clf.randomized_search(
+                DEFAULT_GRID_SEARCH, X=train, y=y_test, plot=True
+            )["params"]
 
         clf = CatBoostClassifier(
             **params,
@@ -103,7 +109,9 @@ def run(
         importance_df = pd.DataFrame(
             {
                 "feature": clf.feature_names_,
-                "importance": clf.get_feature_importance(Pool(train, y_train, cat_features=cat_features)),
+                "importance": clf.get_feature_importance(
+                    Pool(train, y_train, cat_features=cat_features)
+                ),
             }
         )
 
@@ -147,7 +155,9 @@ def run(
                 train, y_train, cat_features=cat_features, plot=False, verbose=False
             )  # todo: добавить eval_data
 
-            new_cat_features = set(CAT_FEATURES).intersection(train.columns[selector.get_support()])
+            new_cat_features = set(CAT_FEATURES).intersection(
+                train.columns[selector.get_support()]
+            )
             X_train_new = train[train.columns[selector.get_support()]]
             X_test_new = test[test.columns[selector.get_support()]]
 

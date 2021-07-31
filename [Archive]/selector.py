@@ -33,7 +33,9 @@ class SklearnSelector:
 
     available_methods = inspect.getmembers(feature_selection, inspect.isclass)
 
-    def __init__(self, method: str = "SelectFromModel", max_features: float = float("inf")):
+    def __init__(
+        self, method: str = "SelectFromModel", max_features: float = float("inf")
+    ):
         self.method = method
         self.selector_class = None
         self.selector = None
@@ -44,7 +46,9 @@ class SklearnSelector:
         assert self.selector_class is not None
 
     def fit(self, model: CatBoostClassifier, train: Pool, max_features: int) -> None:
-        self.selector = self.selector_class(model, n_features_to_select=max_features, varbose=True)
+        self.selector = self.selector_class(
+            model, n_features_to_select=max_features, varbose=True
+        )
         self.selector.fit(train)
 
     def transform(self, train):

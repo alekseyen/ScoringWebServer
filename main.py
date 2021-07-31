@@ -34,7 +34,9 @@ from modeling import run
 
 app = Flask(__name__)
 
-app.config.update(dict(SECRET_KEY="powerful secretkey", WTF_CSRF_SECRET_KEY="a csrf secret key"))
+app.config.update(
+    dict(SECRET_KEY="powerful secretkey", WTF_CSRF_SECRET_KEY="a csrf secret key")
+)
 
 
 @app.route("/badrequest400")

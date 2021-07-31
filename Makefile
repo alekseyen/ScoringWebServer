@@ -3,7 +3,6 @@ deps:  ## Install dependencies
 lint:
 	isort --sl -c .
 	black --check .
-	black --check .
 	## flake8 modeling forms.py main.py
 format:
 	isort --sl .
