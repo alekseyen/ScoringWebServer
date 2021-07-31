@@ -1,4 +1,6 @@
 image: python:latest
+# docker gitlab-ci: https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Docker.gitlab-ci.yml
+# python gitlab-ci: https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Python.gitlab-ci.yml
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
@@ -11,7 +13,7 @@ build-job:
 test-job1:
   stage: test
   before_script:
-    - apk add python python-dev python pip
+    - python -V
     - pip install flake8 isort
     - pip install -Iv black==20.8b1
   script:
