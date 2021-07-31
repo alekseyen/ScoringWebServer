@@ -2,10 +2,6 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
-      - id: trailing-whitespace
-      - id: check-json
-      - id: name-tests-test
-      - id: end-of-file-fixer
       - id: requirements-txt-fixer
   - repo: https://github.com/psf/black
     rev: stable
