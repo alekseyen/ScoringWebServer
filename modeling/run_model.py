@@ -13,7 +13,6 @@ import shutil
 import numpy as np
 
 from enum import Enum
-
 from tqdm import tqdm
 
 

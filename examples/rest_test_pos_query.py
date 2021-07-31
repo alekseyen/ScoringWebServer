@@ -15,3 +15,4 @@ files = {'file': open('tcs04_example3k.csv', 'rb')}
 r = requests.post(url=url, files=files)
 
 print(f'result: {r.text}')
+
