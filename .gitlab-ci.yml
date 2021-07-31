@@ -1,3 +1,8 @@
+.install-deps-template: &install-deps
+  before_script:
+    - pip install flake8 isort
+    - pip install -Iv black==20.8b1
+
 build-job:
   stage: build
   script:
@@ -15,6 +20,7 @@ test-job2:
     - echo "After the echo commands complete, it runs the sleep command for 20 seconds"
     - echo "which simulates a test that runs 20 seconds longer than test-job1"
     - sleep 20
+    -
 deploy-prod:
   stage: deploy
   script:
