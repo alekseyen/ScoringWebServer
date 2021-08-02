@@ -27,7 +27,24 @@ test-job2:
     - echo "After the echo commands complete, it runs the sleep command for 20 seconds"
     - echo "which simulates a test that runs 20 seconds longer than test-job1"
     - sleep 20
+
+Kaniko-Build-Images-In-Kubernetes:
+  stage: Kaniko
+  extends:
+    - .Kaniko-Build-Images-In-Kubernetes
+  variables:
+    X5_KNK_CONTEXT: "./"
+    X5_KNK_DOCKERFILE: "./Dockerfile"
+    X5_KNK_REGISTRY_MIRROR: "dockerhub-proxy.do.x5.ru"
+    X5_KNK_REGISTRY_IMAGE: "${CI_REGISTRY_IMAGE}"
+    X5_KNK_REGISTRY_SUBPATH: ""
+    X5_KNK_IMAGE_LATEST: "false"
+    X5_KNK_GIT_TAG_IMAGE_TAG: "true"
+    X5_KNK_SHORT_SHA_IMAGE_TAG: "true"
+    X5_KNK_CUSTOM_IMAGE_TAG: ""
+    #X5_KNK_BUILD_ARG_: ""
+
 deploy-prod:
   stage: deploy
   script:
-    - docker-compose up --build
+    - echo "nice deploy"

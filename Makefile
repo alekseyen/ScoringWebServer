@@ -1,5 +1,5 @@
 deps:  ## Install dependencies
-	pip install black coverage flake8
+	pip install black isort flake8
 lint:
 	isort --sl -c .
 	black --check .
