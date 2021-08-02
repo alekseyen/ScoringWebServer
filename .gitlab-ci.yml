@@ -13,6 +13,12 @@ image: python:latest
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
+stages:
+  - build-job
+  - test-job1
+  - test-job2
+  - Kaniko
+
 build-job:
   stage: build
   script:
@@ -51,6 +57,10 @@ Kaniko-Build-Images-In-Kubernetes:
     X5_KNK_SHORT_SHA_IMAGE_TAG: "true"
     X5_KNK_CUSTOM_IMAGE_TAG: ""
     #X5_KNK_BUILD_ARG_: ""
+  before_script:
+    - sed "s/__IMAGE__/${X5_KNK_CUSTOM_IMAGE_TAG}/" # Вот сюда вы и хотите подставь значение
+    dependencies: # Тогда добавьте вот это ключевое слово
+      - Kaniko-Build-Images-In-Kubernetes # И про это тоже не забудьте
 
 deploy-prod:
   stage: deploy
