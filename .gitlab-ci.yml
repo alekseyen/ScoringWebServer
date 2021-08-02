@@ -57,10 +57,19 @@ Kaniko-Build-Images-In-Kubernetes:
     X5_KNK_SHORT_SHA_IMAGE_TAG: "true"
     X5_KNK_CUSTOM_IMAGE_TAG: ""
     #X5_KNK_BUILD_ARG_: ""
+#  before_script:
+#    - sed "s/__IMAGE__/${X5_KNK_CUSTOM_IMAGE_TAG}/" # Вот сюда вы и хотите подставь значение
+
+Kubectl_Apply:
+  stage: Kubectl
+  extends:
+    - .Kubectl_Apply
+  variables:
+    X5_K8S_NAMESPACE: ""
   before_script:
     - sed "s/__IMAGE__/${X5_KNK_CUSTOM_IMAGE_TAG}/" # Вот сюда вы и хотите подставь значение
-    dependencies: # Тогда добавьте вот это ключевое слово
-      - Kaniko-Build-Images-In-Kubernetes # И про это тоже не забудьте
+  dependencies: # Тогда добавьте вот это ключевое слово
+    - Kaniko-Build-Images-In-Kubernetes # И про это тоже не забудьте
 
 deploy-prod:
   stage: deploy
