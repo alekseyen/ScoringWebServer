@@ -14,10 +14,11 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 stages:
-  - build-job
-  - test-job1
-  - test-job2
+  - build
+  - test
   - Kaniko
+  - Kubectl
+  - deploy
 
 build-job:
   stage: build
