@@ -1,22 +1,10 @@
 include:
   - project: shared/ci-cd-templates/kubectl
-    ref: 2021-09-18-0
+    ref: 2021-04-23-0
     file: /kubectl.yml
-  - project: shared/ci-cd-templates/polaris
-    ref: 2021-09-18-0
-    file: /polaris.yml
-  - project: shared/ci-cd-templates/hadolint
-    ref: 2021-09-18-0
-    file: /hadolint.yml
   - project: shared/ci-cd-templates/kaniko
-    ref: 2021-09-18-0
+    ref: 2021-05-06-0
     file: /kaniko.yml
-  - project: shared/ci-cd-templates/sonar
-    ref: 2021-09-18-0
-    file: /sonar.yml
-  - project: shared/ci-cd-templates/docker-checking-image
-    ref: 2021-09-18-0
-    file: /docker-checking-image.yml
 
 image: python:latest
 # docker gitlab-ci: https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Docker.gitlab-ci.yml
