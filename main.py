@@ -16,7 +16,6 @@ from wtforms.validators import DataRequired
 from modeling import run
 
 # TODO
-#
 # добавить авто проверки типа тех, что были в ETNA
 # настроить CI на гитхабе
 # добавить в mlflow параметр тип обучения: single, grid, random
@@ -47,6 +46,9 @@ def bad_request():
 UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = {"txt", "csv"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.mkdir(UPLOAD_FOLDER)
 
 
 def allowed_file(filename):
@@ -84,7 +86,7 @@ def upload_file():
 
             #### validate csv
 
-            # поставить в очередь, отпустить сайт
+            # todo: поставить в очередь, отпустить сайт
             run(df)
 
             return "file uploaded"
@@ -127,3 +129,4 @@ def test():
         return redirect(url_for("success"))
 
     return render_template("template_test.html", form=form)
+
