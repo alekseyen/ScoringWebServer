@@ -129,4 +129,3 @@ def test():
         return redirect(url_for("success"))
 
     return render_template("template_test.html", form=form)
-
