@@ -1,7 +1,6 @@
 import pandas as pd
 import requests
 
-
 host = "localhost"
 port = "5000"
 url = f"http://{host}:{port}/"
