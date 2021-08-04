@@ -12,7 +12,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends gcc\
     && rm -rf /var/lib/apt/lists/* \
     && pip install shap flask\
-    && apt-get purge -y --auto-remove gcc g++
+    && apt-get purge -y --auto-remove gcc
 
 RUN pip install -r requirements.txt
 
