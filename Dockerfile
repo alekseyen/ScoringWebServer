@@ -1,4 +1,5 @@
-FROM python:3.8-slim
+#FROM python:3.8-slim
+FROM registry.do.x5.ru/shared/base-containers/python/3.8:2021-04-13-0
 
 WORKDIR /scoringapi
 
