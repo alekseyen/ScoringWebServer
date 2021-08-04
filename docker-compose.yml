@@ -2,7 +2,6 @@ version: '3'
 services:
   flask:
     build: .
-    #    command: flask run --host=0.0.0.0 -p 5000
     command: gunicorn -b 0.0.0.0:5000 main:app --reload --timeout 1200 --workers 4
     environment:
       - FLASK_APP=main.py
@@ -10,7 +9,6 @@ services:
       - PYTHONUNBUFFERED=True
     ports:
       - "5000:5000"
-    volumes:
-#      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI:/Users/aleksejpodkidysev/PycharmProjects/ScoringAPI
-      - ./:/Users/aleksejpodkidysev/PycharmProjects/ScoringAPI
-
+    volumes: # CHANGE !!!
+      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI/mlruns:/scoringapi/mlruns
+    image: 5fdfc915fa6e

@@ -1,11 +1,8 @@
 FROM python:3.8-slim
 
-WORKDIR /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI
+WORKDIR /scoringapi
 
 COPY . .
-
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
 
 RUN apt-get update \
     &&  apt-get install -y --reinstall build-essential \
@@ -18,3 +15,5 @@ RUN apt-get update \
     && apt-get purge -y --auto-remove gcc g++
 
 RUN pip install -r requirements.txt
+
+#CMD rm -r mlruns
