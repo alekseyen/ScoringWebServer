@@ -16,4 +16,5 @@ RUN apt-get update \
 
 RUN pip install -r requirements.txt
 
+RUN mkdir "uploads"
 #CMD rm -r mlruns
