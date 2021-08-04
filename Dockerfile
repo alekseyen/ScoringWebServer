@@ -4,7 +4,6 @@ FROM registry.do.x5.ru/shared/base-containers/python/3.8:2021-04-13-0
 WORKDIR /scoringapi
 
 COPY . .
-COPY mlruns .
 
 RUN apt-get update \
     &&  apt-get install -y --reinstall build-essential g++\
