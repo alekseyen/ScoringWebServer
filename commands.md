@@ -13,3 +13,7 @@ docker push registry.do.x5.ru/aleksey.podkidyshev/scoringapi
 
 to pull image: docker pull registry.do.x5.ru/aleksey.podkidyshev/scoringapi:a1f2ecc3
 (просто нажать эконку скопировать с jupyter hub)
+
+
+# бага с mlflow
+mlflow experiments create -n 0

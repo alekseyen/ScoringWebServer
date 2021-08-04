@@ -7,4 +7,3 @@
 test.py
 /[Archive]/
 !/examples/tcs04_ready.csv
-!mlruns/0/meta.yaml
