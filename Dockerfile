@@ -9,7 +9,7 @@ RUN apt-get update \
     &&  apt-get install -y git
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends gcc g++\
+    && apt-get install -y --no-install-recommends gcc\
     && rm -rf /var/lib/apt/lists/* \
     && pip install shap flask\
     && apt-get purge -y --auto-remove gcc g++
