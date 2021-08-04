@@ -6,3 +6,4 @@
 /catboost_info
 test.py
 /[Archive]/
+!/examples/tcs04_ready.csv

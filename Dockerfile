@@ -4,6 +4,9 @@ WORKDIR /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI
 
 COPY . .
 
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+
 RUN apt-get update \
     &&  apt-get install -y --reinstall build-essential \
     &&  apt-get install -y git
