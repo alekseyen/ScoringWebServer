@@ -17,4 +17,4 @@ RUN apt-get update \
 
 RUN pip install -r requirements.txt
 
-#CMD [ "gunicorn", "-b", "0.0.0.0:5000", "main:app", "--reload", "--timeout 1200", "--workers", "4"]
+CMD ['mlflow', 'experiments', 'create', '-n', '0']
