@@ -1,4 +1,4 @@
-docker exec -it CONTAINTER_ID bash// for connect in docker files
+docker exec -it CONTAINTER_ID bash # for connect in docker files
 
 mlflow run . -e 'run_model.py' --no-conda
 
@@ -14,6 +14,5 @@ docker push registry.do.x5.ru/aleksey.podkidyshev/scoringapi
 to pull image: docker pull registry.do.x5.ru/aleksey.podkidyshev/scoringapi:a1f2ecc3
 (просто нажать эконку скопировать с jupyter hub)
 
-
-# бага с mlflow
+# бага с mlflow (если говорит что не может с experiment_id найти переменную)
 mlflow experiments create -n 0
