@@ -95,8 +95,8 @@ def run(
         os.mkdir("graphs")
         os.mkdir("datasets")
 
-        train.to_csv("datasets/train_dataset.csv", compression="gzip")
-        test.to_csv("datasets/test_dataset.csv", compression="gzip")
+        train.to_csv("datasets/train_dataset.gz", compression="gzip")
+        test.to_csv("datasets/test_dataset.gz", compression="gzip")
 
         mlflow.log_artifacts("datasets", artifact_path="datasets")
 
@@ -116,7 +116,7 @@ def run(
         )
 
         importance_df.sort_values(by=["importance"], ascending=False, inplace=True)
-        importance_df.to_csv("graphs/importance.csv", compression="gzip")
+        importance_df.to_csv("graphs/importance.csv")
 
         ############## make predict
 
