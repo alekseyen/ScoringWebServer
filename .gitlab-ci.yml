@@ -55,7 +55,7 @@ Kaniko-Build-Images-In-Kubernetes:
     X5_KNK_IMAGE_LATEST: "false"
     X5_KNK_GIT_TAG_IMAGE_TAG: "true"
     X5_KNK_SHORT_SHA_IMAGE_TAG: "true"
-    X5_KNK_CUSTOM_IMAGE_TAG: ""
+    X5_KNK_CUSTOM_IMAGE_TAG: "latest"
     #X5_KNK_BUILD_ARG_: ""
 #  before_script:
 #    - sed "s/__IMAGE__/${X5_KNK_CUSTOM_IMAGE_TAG}/" # Вот сюда вы и хотите подставь значение

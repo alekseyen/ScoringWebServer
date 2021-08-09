@@ -214,5 +214,5 @@ def run(
         print("Active run_id: {}".format(run.info.run_id))
 
 
-run(pd.read_csv("uploads/tcs04_example3k.csv").drop(columns=["Unnamed: 0"]))
+# run(pd.read_csv("uploads/tcs04_example3k.csv").drop(columns=["Unnamed: 0"]))
 # run(pd.read_csv('uploads/full_tcs04.csv').drop(columns=['Unnamed: 0']))
