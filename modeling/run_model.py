@@ -95,8 +95,8 @@ def run(
         os.mkdir("graphs")
         os.mkdir("datasets")
 
-        train.to_csv("datasets/train_dataset.csv")
-        test.to_csv("datasets/test_dataset.csv")
+        train.to_csv("datasets/train_dataset.csv", compression="gzip")
+        test.to_csv("datasets/test_dataset.csv", compression="gzip")
 
         mlflow.log_artifacts("datasets", artifact_path="datasets")
 
@@ -116,7 +116,7 @@ def run(
         )
 
         importance_df.sort_values(by=["importance"], ascending=False, inplace=True)
-        importance_df.to_csv("graphs/importance.csv")
+        importance_df.to_csv("graphs/importance.csv", compression="gzip")
 
         ############## make predict
 
@@ -205,12 +205,14 @@ def run(
 
         ######## delete temp log folders
 
-        shutil.rmtree("graphs")
+        shutil.rmtree(
+            "graphs"
+        )  # надо с with это делать чтобы они обязательно удалялись
         shutil.rmtree("datasets")
 
         run = mlflow.active_run()
         print("Active run_id: {}".format(run.info.run_id))
 
 
-# run(pd.read_csv('uploads/tcs04_example3k.csv').drop(columns=['Unnamed: 0']))
+run(pd.read_csv("uploads/tcs04_example3k.csv").drop(columns=["Unnamed: 0"]))
 # run(pd.read_csv('uploads/full_tcs04.csv').drop(columns=['Unnamed: 0']))

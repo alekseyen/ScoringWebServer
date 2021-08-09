@@ -9,6 +9,7 @@ services:
       - PYTHONUNBUFFERED=True
     ports:
       - "5000:5000"
-    volumes: # CHANGE !!!
-      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI/mlruns:/scoringapi/mlruns
+    volumes:
+      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI/mlruns:/scoringapi/mlruns #local
+      #- /home/local/X5/aleksey.podkidyshev/Scoring/scoringapi #noda47
     image: 5fdfc915fa6e

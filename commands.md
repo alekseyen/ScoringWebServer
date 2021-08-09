@@ -16,3 +16,6 @@ to pull image: docker pull registry.do.x5.ru/aleksey.podkidyshev/scoringapi:a1f2
 
 # бага с mlflow (если говорит что не может с experiment_id найти переменную)
 mlflow experiments create -n 0
+
+# запуск mlflow UI
+mlflow ui --host 0.0.0.0 --port 5003
