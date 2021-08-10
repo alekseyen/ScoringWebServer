@@ -1,7 +1,6 @@
 deps:  ## Install dependencies
 	pip install black isort flake8
 lint:
-	isort --sl -c .
 	black --check .
 	## flake8 modeling forms.py main.py
 format:

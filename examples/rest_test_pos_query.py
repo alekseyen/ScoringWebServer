@@ -1,11 +1,15 @@
+import json
+
 import pandas as pd
 import requests
 
-host = "localhost"
+host = "localhost"  # mn-hdap47.x5.ru
 port = "5000"
 url = f"http://{host}:{port}/"
 
-files = {"file": open("tcs04_example3k.csv", "rb")}
+params = {"search_type": "optuna"}
+
+files = {"file": open("tcs04_example3k.csv", "rb"), "param": json.dumps(params)}
 
 r = requests.post(url=url, files=files)
 

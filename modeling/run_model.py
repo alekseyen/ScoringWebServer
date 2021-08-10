@@ -6,21 +6,23 @@ from typing import Dict
 import matplotlib.pyplot as plt
 import mlflow
 import numpy as np
+import optuna
 import pandas as pd
-import shap
 from catboost import CatBoostClassifier
 from catboost import Pool
 from sklearn.feature_selection import SelectFromModel
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
 from tqdm import tqdm
+
+SEED = 42
 
 
 class LearningType(Enum):
     SINGLE = "single"
     RANDOMIZED = "randomized"
     GRID = "grid"
+    OPTUNA = "optuna"
 
 
 CAT_FEATURES = [
@@ -54,6 +56,37 @@ def do_actual_cat_features(df):
     return ans
 
 
+def optuna_learning(trial, train, y_train, test, y_test):
+    # Parameters
+    params = {
+        "iterations": trial.suggest_int("iterations", 50, 300),
+        "depth": trial.suggest_int("depth", 4, 10),
+        "learning_rate": trial.suggest_loguniform("learning_rate", 0.01, 0.3),
+        "random_strength": trial.suggest_int("random_strength", 0, 100),
+        "bagging_temperature": trial.suggest_loguniform(
+            "bagging_temperature", 0.01, 100.00
+        ),
+        "od_type": trial.suggest_categorical("od_type", ["IncToDec", "Iter"]),
+        "used_ram_limit": "40gb",
+    }
+    # Learning
+    model = CatBoostClassifier(
+        loss_function="Logloss",
+        eval_metric="AUC",
+        l2_leaf_reg=50,
+        random_seed=SEED,
+        border_count=64,
+        cat_features=do_actual_cat_features(train),
+        **params,
+    )
+    model.fit(train, y_train, verbose=False)
+    # Predict
+    preds = model.predict_proba(test)[:, 1]
+    ROC_AUC_Score = roc_auc_score(y_test, preds)
+    print(f"test = {ROC_AUC_Score}")
+    return ROC_AUC_Score
+
+
 def run(
     df: pd.DataFrame,
     params: Dict = DEFAULT_PARAMS,
@@ -83,13 +116,24 @@ def run(
                 DEFAULT_GRID_SEARCH, X=train, y=y_test, plot=True
             )["params"]
 
+        if search_type == LearningType.OPTUNA:
+            study = optuna.create_study(
+                direction="maximize", sampler=optuna.samplers.TPESampler(seed=SEED)
+            )
+            study.optimize(
+                lambda trial: optuna_learning(trial, train, y_train, test, y_test),
+                n_trials=10,
+            )
+
+            params = study.best_trial.params
+
         clf = CatBoostClassifier(
             **params,
             eval_metric="AUC:hints=skip_train~false",
             cat_features=cat_features,
             loss_function="Logloss",
             early_stopping_rounds=10,
-            random_state=13,
+            random_state=SEED,
         )
 
         os.mkdir("graphs")
@@ -130,6 +174,8 @@ def run(
 
         ##############
 
+        ##############
+
         mlflow.log_metric("roc-auc-test", roc_auc_score(y_test, y_pred_test))
         mlflow.log_metric("gini-test", gini(y_test, y_pred_test))
 
@@ -148,7 +194,7 @@ def run(
                 eval_metric="AUC:hints=skip_train~false",
                 loss_function="Logloss",
                 early_stopping_rounds=10,
-                random_state=13,
+                random_state=SEED,
                 verbose=False,
             )
             selector = SelectFromModel(estimator=clf, max_features=features_num).fit(
@@ -166,7 +212,7 @@ def run(
                 cat_features=new_cat_features,
                 eval_metric="AUC:hints=skip_train~false",
                 verbose=False,
-                random_state=13,
+                random_state=SEED,
             )
 
             cat_model.fit(
@@ -189,20 +235,12 @@ def run(
         plt.grid()
         plt.savefig("graphs/feature_num_plot.png")
 
-        ###
-
-        # explainer = shap.TreeExplainer(clf)
-        # shap_values = explainer.shap_values(test_data)
-        # shap.summary_plot(shap_values, test_data, plot_type="bar", show=False,
-        #                   feature_names = test_data.get_feature_names())
-        #
-        # plt.savefig("graphs/shap.png")
-
         mlflow.log_artifacts("graphs", artifact_path="graphs")
 
         mlflow.log_param("catboost param", params)
         mlflow.log_param("dataset shape", df.shape)
 
+        mlflow.log_param("learning type", search_type)
         ######## delete temp log folders
 
         shutil.rmtree(
@@ -214,5 +252,5 @@ def run(
         print("Active run_id: {}".format(run.info.run_id))
 
 
-# run(pd.read_csv("uploads/tcs04_example3k.csv").drop(columns=["Unnamed: 0"]))
+# run(pd.read_csv("../uploads/tcs04_example3k.csv").drop(columns=["Unnamed: 0"]), search_type=LearningType.OPTUNA)
 # run(pd.read_csv('uploads/full_tcs04.csv').drop(columns=['Unnamed: 0']))

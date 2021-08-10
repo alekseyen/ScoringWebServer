@@ -11,5 +11,6 @@ services:
       - "5000:5000"
     volumes:
       - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI/mlruns:/scoringapi/mlruns #local
+#      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI:/scoringapi #local
       #- /home/local/X5/aleksey.podkidyshev/Scoring/scoringapi #noda47
-    image: 5fdfc915fa6e
+#    image: 5fdfc915fa6e
