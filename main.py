@@ -46,7 +46,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 try:
     os.mkdir(UPLOAD_FOLDER)
 except:
-    print('uploads already exist')
+    print("uploads already exist")
     pass
 
 

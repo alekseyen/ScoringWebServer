@@ -7,3 +7,4 @@
 test.py
 /[Archive]/
 !/examples/tcs04_ready.csv
+/cache/

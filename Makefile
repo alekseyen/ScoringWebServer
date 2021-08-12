@@ -6,4 +6,4 @@ lint:
 format:
 	isort --sl .
 	black .
-	flake8 modeling forms.py main.py --ignore E731,E266,F401,F841,E262,E501,W291
+	flake8 modeling forms.py main.py --ignore E731,E266,F401,F841,E262,E501,W291,E722
