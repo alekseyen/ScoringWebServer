@@ -105,7 +105,6 @@ def run(
     )
 
     with mlflow.start_run():
-
         if search_type == LearningType.GRID:
             params = clf.grid_search(
                 DEFAULT_GRID_SEARCH, X=train, y=y_train, plot=True
@@ -136,8 +135,11 @@ def run(
             random_state=SEED,
         )
 
-        os.mkdir("graphs")
-        os.mkdir("datasets")
+        try:
+            os.mkdir("graphs")
+            os.mkdir("datasets")
+        except:
+            pass
 
         train.to_csv("datasets/train_dataset.gz", compression="gzip")
         test.to_csv("datasets/test_dataset.gz", compression="gzip")
@@ -243,10 +245,8 @@ def run(
         mlflow.log_param("learning type", search_type)
         ######## delete temp log folders
 
-        shutil.rmtree(
-            "graphs"
-        )  # надо с with это делать чтобы они обязательно удалялись
-        shutil.rmtree("datasets")
+        shutil.rmtree("graphs", ignore_errors=True)
+        shutil.rmtree("datasets", ignore_errors=True)
 
         run = mlflow.active_run()
         print("Active run_id: {}".format(run.info.run_id))

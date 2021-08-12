@@ -1,8 +1,18 @@
-version: '3'
+version: '3.9'
+
+x-services-volume:
+  &services-volume
+  type: bind
+  source: ./cache # пофиг на название, эта папка используется для синхрониазции контейнеров
+  target: /scoringapi/mlruns
+#  source: ./mlruns
+#  target: mlruns
+
 services:
-  flask:
+  flask_web:
     build: .
-    command: gunicorn -b 0.0.0.0:5000 main:app --reload --timeout 1200 --workers 4
+    command: >
+      bash -c "gunicorn -b 0.0.0.0:5000 main:app --reload --timeout 1200 --workers 4"
     environment:
       - FLASK_APP=main.py
       - FLASK_DEBUG=1
@@ -10,7 +20,28 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI/mlruns:/scoringapi/mlruns #local
+      - <<: *services-volume
+      #    volumes:
+#      #- /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI/mlruns:/scoringapi/mlruns #local
 #      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI:/scoringapi #local
-      #- /home/local/X5/aleksey.podkidyshev/Scoring/scoringapi #noda47
-#    image: 5fdfc915fa6e
+      #- /home/local/X5/aleksey.podkidyshev/scoringapi/mlruns:/scoringapi/mlruns #noda47
+    image: 5d02aa1797e5
+    networks:
+      - backend
+  mlflow:
+    restart: always
+    build: .
+    container_name: mlflow_server
+    ports:
+      - "5005:5005"
+    networks:
+      - backend
+    image: 5d02aa1797e5
+    volumes:
+      - <<: *services-volume
+    command: >
+      bash -c "mlflow server --host 0.0.0.0 --port 5005"
+
+networks:
+  backend:
+    driver: bridge

@@ -5,27 +5,25 @@ from typing import List
 import pandas as pd
 from flask import Flask
 from flask import abort
-from flask import flash
-from flask import redirect
 from flask import render_template
-from flask import request
-from flask import url_for
 from flask_wtf import FlaskForm
-from werkzeug.utils import secure_filename
 from wtforms import FileField
 from wtforms import SelectField
 from wtforms.validators import DataRequired
 from wtforms.validators import StopValidation
-from wtforms.validators import ValidationError
 
 from modeling import run
 
 # TODO
 
-# подружить их с mlflow
-# делать return предсказаных значений в POST запросе
+# - nginx. reversed proxy server.
+# См вот тут: https://github.com/sachua/mlflow-docker-compose (крутой проект)
 
-# прочитать про REST проекты
+# - подружить optuna с mlflow
+# - делать return предсказаных значений в POST запросе
+
+# - прочитать про аналогичные REST проекты
+# NGINX + FLASK: https://towardsdatascience.com/how-to-deploy-ml-models-using-flask-gunicorn-nginx-docker-9b32055b3d0
 # https://towardsdatascience.com/machine-learning-prediction-in-real-time-using-docker-and-python-rest-apis-with-flask-4235aa2395eb
 # https://towardsdatascience.com/build-and-run-a-docker-container-for-your-machine-learning-model-60209c2d7a7f
 
@@ -45,8 +43,11 @@ def bad_request():
 UPLOAD_FOLDER = "uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-if not os.path.exists(UPLOAD_FOLDER):
+try:
     os.mkdir(UPLOAD_FOLDER)
+except:
+    print('uploads already exist')
+    pass
 
 
 def check_file_type(valid_types: List[str] = ["csv"]):
@@ -60,7 +61,6 @@ def check_file_type(valid_types: List[str] = ["csv"]):
     return validate_file_type
 
 
-# todo: Test
 class SubmitForm(FlaskForm):
     """Sign up for a user account."""
 
