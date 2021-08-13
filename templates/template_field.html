@@ -6,7 +6,7 @@
     </head>
     <body>
     <h1> Upload csv</h1>
-    <form method="POST" action="{{ url_for('test') }}" role="form" enctype="multipart/form-data">
+    <form method="POST" action="{{ url_for('main') }}" role="form" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <div  style="margin-bottom:1em">
             {{ form.learning_field.label }}

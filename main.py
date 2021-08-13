@@ -16,11 +16,12 @@ from modeling import run
 
 # TODO
 
+# - early_stopping в catboost, чтобы не было по 1k итераций, он явно быстрее сходиться
+
 # - nginx. reversed proxy server.
 # См вот тут: https://github.com/sachua/mlflow-docker-compose (крутой проект)
 
 # - подружить optuna с mlflow
-# - делать return предсказаных значений в POST запросе
 
 # - прочитать про аналогичные REST проекты
 # NGINX + FLASK: https://towardsdatascience.com/how-to-deploy-ml-models-using-flask-gunicorn-nginx-docker-9b32055b3d0
@@ -78,7 +79,7 @@ class SubmitForm(FlaskForm):
 
 
 @app.route("/", methods=["GET", "POST"])
-def test():
+def main():
     """User sign-up form for account creation."""
     form = SubmitForm(learning_field="single")
 

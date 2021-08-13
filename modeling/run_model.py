@@ -1,5 +1,6 @@
 import os
 import shutil
+import time
 from enum import Enum
 from typing import Dict
 
@@ -18,7 +19,7 @@ from tqdm import tqdm
 SEED = 42
 
 
-class LearningType(Enum):
+class LearningType(str, Enum):
     SINGLE = "single"
     RANDOMIZED = "randomized"
     GRID = "grid"
@@ -105,6 +106,9 @@ def run(
     )
 
     with mlflow.start_run():
+
+        start_param_finding_time = time.time()
+
         if search_type == LearningType.GRID:
             params = clf.grid_search(
                 DEFAULT_GRID_SEARCH, X=train, y=y_train, plot=True
@@ -112,7 +116,7 @@ def run(
 
         if search_type == LearningType.RANDOMIZED:
             params = clf.randomized_search(
-                DEFAULT_GRID_SEARCH, X=train, y=y_test, plot=True
+                DEFAULT_GRID_SEARCH, X=train, y=y_train, plot=True
             )["params"]
 
         if search_type == LearningType.OPTUNA:
@@ -125,6 +129,10 @@ def run(
             )
 
             params = study.best_trial.params
+
+            print("optuna", params)
+
+        mlflow.log_param("time_params_finding", time.time() - start_param_finding_time)
 
         clf = CatBoostClassifier(
             **params,
@@ -148,7 +156,11 @@ def run(
 
         print("starting fit")
 
+        start_fit_time = time.time()
+
         clf.fit(train, y_train, plot=True, verbose=False)
+
+        mlflow.log_param("time_fit", time.time() - start_fit_time)
 
         ############## feature importance csv
 
@@ -201,7 +213,7 @@ def run(
             )
             selector = SelectFromModel(estimator=clf, max_features=features_num).fit(
                 train, y_train, cat_features=cat_features, plot=False, verbose=False
-            )  # todo: добавить eval_data
+            )
 
             new_cat_features = set(CAT_FEATURES).intersection(
                 train.columns[selector.get_support()]
