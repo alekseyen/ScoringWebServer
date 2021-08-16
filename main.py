@@ -28,7 +28,6 @@ from modeling import run
 # https://towardsdatascience.com/machine-learning-prediction-in-real-time-using-docker-and-python-rest-apis-with-flask-4235aa2395eb
 # https://towardsdatascience.com/build-and-run-a-docker-container-for-your-machine-learning-model-60209c2d7a7f
 
-
 app = Flask(__name__)
 
 app.config.update(

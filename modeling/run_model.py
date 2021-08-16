@@ -18,7 +18,6 @@ from tqdm import tqdm
 
 SEED = 42
 
-
 class LearningType(str, Enum):
     SINGLE = "single"
     RANDOMIZED = "randomized"
@@ -80,6 +79,7 @@ def optuna_learning(trial, train, y_train, test, y_test):
         cat_features=do_actual_cat_features(train),
         **params,
     )
+
     model.fit(train, y_train, verbose=False)
     # Predict
     preds = model.predict_proba(test)[:, 1]
@@ -215,9 +215,9 @@ def run(
                 train, y_train, cat_features=cat_features, plot=False, verbose=False
             )
 
-            new_cat_features = set(CAT_FEATURES).intersection(
+            new_cat_features = list(set(CAT_FEATURES).intersection(
                 train.columns[selector.get_support()]
-            )
+            ))
             X_train_new = train[train.columns[selector.get_support()]]
             X_test_new = test[test.columns[selector.get_support()]]
 

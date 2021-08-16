@@ -19,3 +19,8 @@ mlflow experiments create -n 0
 
 # запуск mlflow UI
 mlflow ui --host 0.0.0.0 --port 5003
+
+# cleaning
+docker system prune
+docker builder prune
+docker system df

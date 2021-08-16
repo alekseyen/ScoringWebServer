@@ -3,7 +3,7 @@ version: '3.9'
 x-services-volume:
   &services-volume
   type: bind
-  source: ./cache # пофиг на название, эта папка используется для синхрониазции контейнеров
+  source: ./cache # пофиг на название, эта папка используется для синхронизации контейнеров
   target: /scoringapi/mlruns
 #  source: ./mlruns
 #  target: mlruns
@@ -12,7 +12,7 @@ services:
   flask_web:
     build: .
     command: >
-      bash -c "gunicorn -b 0.0.0.0:5000 main:app --reload --timeout 1200 --workers 4"
+      bash -c "gunicorn -b 0.0.0.0:5000 main:app --reload --timeout 120000 --workers 12"
     environment:
       - FLASK_APP=main.py
       - FLASK_DEBUG=1
@@ -21,9 +21,8 @@ services:
       - "5000:5000"
     volumes:
       - <<: *services-volume
-      #    volumes:
 #      #- /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI/mlruns:/scoringapi/mlruns #local
-#      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI:/scoringapi #local
+      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI:/scoringapi #local
       #- /home/local/X5/aleksey.podkidyshev/scoringapi/mlruns:/scoringapi/mlruns #noda47
     image: 5d02aa1797e5
     networks:

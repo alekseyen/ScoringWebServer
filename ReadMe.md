@@ -9,7 +9,6 @@
 
 2. ```docker-compose up --build```
 
-
 ## Как развернуть приложение. Способ 2
 
 1. скачать docker image с гитлаба или сделать docker build .
@@ -17,4 +16,3 @@
 2. указать docker image в файле docker-compose.yml
 
 3. ```docker-compose up```
-
