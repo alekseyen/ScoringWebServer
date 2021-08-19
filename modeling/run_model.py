@@ -16,7 +16,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 
-SEED = 42
+SEED = 44
 
 
 class LearningType(str, Enum):
@@ -34,6 +34,7 @@ CAT_FEATURES = [
     "loyalty_card_type_code",
     "gender_dk",
     "product",
+    "anumber",
 ]
 
 DEFAULT_PARAMS = {"depth": 6, "learning_rate": 0.15, "iterations": 200}
