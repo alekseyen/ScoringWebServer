@@ -35,3 +35,11 @@ services:
       - <<: *services-volume
     command: >
       bash -c "mlflow server --host 0.0.0.0 --port 5005"
+
+networks:
+  default:
+    driver: bridge
+      ipam:
+        driver: default
+        config:
+          - subnet: 100.127.0.0/16
