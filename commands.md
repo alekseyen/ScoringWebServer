@@ -23,3 +23,18 @@ mlflow ui --host 0.0.0.0 --port 5003
 docker system prune
 docker builder prune
 docker system df
+
+
+# TODO
+
+# - early_stopping в catboost, чтобы не было по 1k итераций, он явно быстрее сходиться
+
+# - nginx. reversed proxy server.
+# См вот тут: https://github.com/sachua/mlflow-docker-compose (крутой проект)
+
+# - подружить optuna с mlflow
+
+# - прочитать про аналогичные REST проекты
+# NGINX + FLASK: https://towardsdatascience.com/how-to-deploy-ml-models-using-flask-gunicorn-nginx-docker-9b32055b3d0
+# https://towardsdatascience.com/machine-learning-prediction-in-real-time-using-docker-and-python-rest-apis-with-flask-4235aa2395eb
+# https://towardsdatascience.com/build-and-run-a-docker-container-for-your-machine-learning-model-60209c2d7a7f

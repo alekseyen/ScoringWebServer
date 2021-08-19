@@ -35,6 +35,19 @@ CAT_FEATURES = [
     "gender_dk",
     "product",
     "anumber",
+    "d_region_first",
+    "s_region_first",
+    "h_region_first",
+    "gender_dk",
+    "loyalty_appl_form_status_code",
+    "loyalty_card_status_dk",
+    "loyalty_card_type_code",
+    "loyalty_card_type_id",
+    "def_phone_region_rossvyaz",
+    "def_phone_region_code",
+    "def_phone_region_x5",
+    "favourite_region_lag361_dur360",
+    "favourite_region_lag181_dur360",
 ]
 
 DEFAULT_PARAMS = {"depth": 6, "learning_rate": 0.15, "iterations": 200}

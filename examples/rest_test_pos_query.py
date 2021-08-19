@@ -7,7 +7,7 @@ host = "localhost"  # mn-hdap47.x5.ru
 port = "5000"
 url = f"http://{host}:{port}/"
 
-params = {"search_type": "optuna"}
+params = {"search_type": "single"}
 
 files = {"file": open("tcs04_example3k.csv", "rb"), "param": json.dumps(params)}
 
