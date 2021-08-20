@@ -5,8 +5,13 @@ from typing import List
 import pandas as pd
 from flask import Flask
 from flask import abort
+from flask import flash
+from flask import redirect
 from flask import render_template
+from flask import request
+from flask import url_for
 from flask_wtf import FlaskForm
+from werkzeug.utils import secure_filename
 from wtforms import FileField
 from wtforms import SelectField
 from wtforms.validators import DataRequired
@@ -79,3 +84,50 @@ def main():
             """
 
     return render_template("template_field.html", form=form)
+
+
+@app.route("/send_csv", methods=["GET", "POST"])
+def upload_file():
+    if request.method == "POST":
+        if "file" not in request.files:
+            flash("No file part")
+            return redirect(request.url)
+
+        file = request.files["file"]
+
+        if file.filename == "":
+            flash("No selected file")
+            print("didn't sent any files")
+            return redirect(request.url)
+
+        filename = secure_filename(file.filename)
+
+        ### validate datetype
+
+        if filename[-3:] != "csv":
+            redirect(
+                url_for(
+                    "upload_file",
+                )
+            )
+
+        file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        df = pd.read_csv(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+        #### validate csv
+
+        # todo: поставить в очередь, отпустить сайт
+        run(df)
+
+        return "file uploaded"
+
+    return """
+    <!doctype html>
+    <title> Upload </title>
+
+    <h1> Upload csv</h1>
+    <form method=post enctype=multipart/form-data>
+        <input type=file name=file>
+        <input type=submit value=Upload>
+    </form>
+    """

@@ -3,9 +3,9 @@ import json
 import pandas as pd
 import requests
 
-host = "localhost"  # mn-hdap47.x5.ru
+host = "0.0.0.0"  # mn-hdap47.x5.ru
 port = "5000"
-url = f"http://{host}:{port}/"
+url = f"http://{host}:{port}/send_csv"
 
 params = {"search_type": "single"}
 

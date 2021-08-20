@@ -21,8 +21,6 @@ mlflow ui --host 0.0.0.0 --port 5003
 
 # cleaning
 docker system prune
-docker builder prune
-docker system df
 
 
 # TODO

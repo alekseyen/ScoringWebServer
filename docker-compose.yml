@@ -21,14 +21,14 @@ services:
       - <<: *services-volume
 #      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI:/scoringapi
        # - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI:/scoringapi #local
-    image: e8bb304bc06c
+    image: c72a63d3dec6
   mlflow:
     restart: always
     build: .
     container_name: mlflow_server
     ports:
       - "5005:5005"
-    image: e8bb304bc06c
+    image: c72a63d3dec6
     volumes:
       - <<: *services-volume
     command: >
