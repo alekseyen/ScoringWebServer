@@ -20,7 +20,7 @@ services:
     volumes:
       - <<: *services-volume
 #      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI:/scoringapi
-       # - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI:/scoringapi #local
+      - /Users/aleksejpodkidysev/PycharmProjects/ScoringAPI:/scoringapi #local
     image: c72a63d3dec6
   mlflow:
     restart: always

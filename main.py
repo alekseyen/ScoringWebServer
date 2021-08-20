@@ -93,11 +93,11 @@ def upload_file():
             flash("No file part")
             return redirect(request.url)
 
+
         file = request.files["file"]
 
         if file.filename == "":
             flash("No selected file")
-            print("didn't sent any files")
             return redirect(request.url)
 
         filename = secure_filename(file.filename)
@@ -116,8 +116,7 @@ def upload_file():
 
         #### validate csv
 
-        # todo: поставить в очередь, отпустить сайт
-        run(df)
+        run(df, search_type = json.load(request.files["param"])['search_type'])
 
         return "file uploaded"
 
