@@ -93,7 +93,6 @@ def upload_file():
             flash("No file part")
             return redirect(request.url)
 
-
         file = request.files["file"]
 
         if file.filename == "":
@@ -116,7 +115,7 @@ def upload_file():
 
         #### validate csv
 
-        run(df, search_type = json.load(request.files["param"])['search_type'])
+        run(df, search_type=json.load(request.files["param"])["search_type"])
 
         return "file uploaded"
 

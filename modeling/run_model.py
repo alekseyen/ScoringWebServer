@@ -121,7 +121,7 @@ def run(
     )
 
     with mlflow.start_run():
-        print(f'start paramets finding, search type: {search_type}')
+        print(f"start paramets finding, search type: {search_type}")
 
         start_param_finding_time = time.time()
 
